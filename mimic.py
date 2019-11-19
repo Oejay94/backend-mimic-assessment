@@ -48,31 +48,42 @@ import sys
 
 
 def mimic_dict(filename):
-    """Returns mimic dict mapping each word to list of words which follow it."""
-    # +++your code here+++
-    raise NotImplementedError("Get to Work!")
+    word_dict = {}
+    prev = ''
+    text = open(filename, 'r')
+    text_string = text.read().lower()
+
+    for word in text_string.split():
+        if prev not in word_dict:
+            word_dict[prev] = [word]
+        else:
+            word_dict[prev].append(word)
+        prev = word
+
+    return word_dict
+
+    # raise NotImplementedError("Get to Work!")
 
 
 def print_mimic(mimic_dict, word):
-    """Given mimic dict and start word, prints 200 random words:
-        - Start with '' (empty string) as a seed word.
-        - Print the seed word
-        - Lookup this word in your mimic_dict and get it's value list
-        - Randomly select a new seed word from this word list
-        - Repeat this process 200 times
-    """
-    # +++your code here+++
-    raise NotImplementedError("Get to Work!")
+    for unused_i in range(200):
+        print(word),
+        nexts = mimic_dict.get(word)
+        if not nexts:
+            nexts = mimic_dict['']
+        word = random.choice(nexts)
+
+    # raise NotImplementedError("Get to Work!")
 
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
     if len(sys.argv) != 2:
-        print 'usage: python mimic.py file-to-read'
+        print('usage: python mimic.py file-to-read')
         sys.exit(1)
 
-    d = mimic_dict(sys.argv[1])
-    print_mimic(d, '')
+    dict = mimic_dict(sys.argv[1])
+    print_mimic(dict, '')
 
 
 if __name__ == '__main__':
